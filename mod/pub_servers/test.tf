@@ -17,6 +17,33 @@ variable "name" {
   default = "Lims"
 }
 
+data "aws_ami" "bastion" {
+  most_recent = true
+# owners      = ["aws-marketplace"]
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-2.0-*-x86_64-gp2"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+
+
 
 resource "aws_instance" "pub-srvs" {
 count=1
